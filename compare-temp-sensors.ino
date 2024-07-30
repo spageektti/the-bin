@@ -9,6 +9,28 @@
 #define DHT_TYPE DHT22
 #define ONE_WIRE_BUS 15
 #define THERMISTOR_PIN A1
+#define BUTTON_PIN 11
+#define NUM_LEDS 10
+
+// Button and LED bar
+volatile int displayMode = 0; // 0 = Thermistor, 1 = DHT22, 2 = DS18B20
+const int ledPins[NUM_LEDS] = {3, 4, 5, 6, 7, 8, 9, 10, 12, 13};
+void handleButtonPress() {
+  displayMode = (displayMode + 1) % 3;
+}
+void displayTemperatureOnLEDBarGraph(float temperature) {
+  // Map temperature range to number of LEDs lit
+  int numLedsLit = map(temperature, 0, 50, 0, NUM_LEDS); // Adjust range as needed
+
+  // Update LED bar graph
+  for (int i = 0; i < NUM_LEDS; i++) {
+    if (i < numLedsLit) {
+      digitalWrite(ledPins[i], HIGH);
+    } else {
+      digitalWrite(ledPins[i], LOW);
+    }
+  }
+}
 
 // DHT setup
 DHT dht(DHT_PIN, DHT_TYPE);
@@ -32,6 +54,15 @@ void setup() {
   // Initialize DS18B20 sensor
   pinMode(ONE_WIRE_BUS, INPUT_PULLUP);
   sensors.begin();
+
+  // Initialize LED Bar pins
+  for (int i = 0; i < NUM_LEDS; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
+
+  // Initialize button
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), handleButtonPress, FALLING);
 }
 
 void loop() {
@@ -54,6 +85,26 @@ void loop() {
   Serial1.print("DS18B20: ");
   Serial1.println(ds18b20Celsius);
 
+  // Get the temperature to display
+  float temperatureToDisplay;
+  switch (displayMode) {
+    case 0:
+      temperatureToDisplay = thermistorCelsius;
+      Serial1.print("Displaying Thermistor Temperature: ");
+      break;
+    case 1:
+      temperatureToDisplay = dhtCelsius;
+      Serial1.print("Displaying DHT22 Temperature: ");
+      break;
+    case 2:
+      temperatureToDisplay = ds18b20Celsius;
+      Serial1.print("Displaying DS18B20 Temperature: ");
+      break;
+  }
+
+  // Update LED bar graph
+  displayTemperatureOnLEDBarGraph(temperatureToDisplay);
+
   // Delay before next reading
-  delay(2000); // 2 seconds delay between readings
+  delay(100); // 2 seconds delay between readings
 }
