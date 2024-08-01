@@ -34,7 +34,7 @@
       "top": 371.3,
       "left": -343.7,
       "rotate": 270,
-      "attrs": {}
+      "attrs": { "distance": "196" }
     },
     { "type": "wokwi-membrane-keypad", "id": "keypad1", "top": -50, "left": -90.4, "attrs": {} },
     { "type": "wokwi-vcc", "id": "vcc1", "top": 711.16, "left": -96, "attrs": {} },
@@ -52,8 +52,17 @@
     [ "wokwi-hc-sr04-0:VCC", "vcc1:VCC", "red", [ "h0" ] ],
     [ "wokwi-pir-motion-sensor-0:OUT", "pico:GP22", "green", [ "h-28.8", "v19.06" ] ],
     [ "wokwi-servo-0:PWM", "pico:GP15", "green", [ "h0" ] ],
-    [ "wokwi-hc-sr04-0:ECHO", "pico:GP2", "green", [ "h192", "v29.6" ] ],
-    [ "wokwi-hc-sr04-0:TRIG", "pico:GP3", "green", [ "h182.4", "v29.2" ] ]
+    [ "wokwi-hc-sr04-0:ECHO", "pico:GP2", "blue", [ "h192", "v29.6" ] ],
+    [ "wokwi-hc-sr04-0:TRIG", "pico:GP3", "green", [ "h182.4", "v29.2" ] ],
+    [ "wokwi-buzzer-0:2", "pico:GP26", "green", [ "h-96", "v105.2" ] ],
+    [ "keypad1:R1", "pico:GP6", "green", [ "v19.2", "h-57.6", "v268.8" ] ],
+    [ "keypad1:R2", "pico:GP7", "green", [ "v28.8", "h-58", "v182.4" ] ],
+    [ "keypad1:R3", "pico:GP8", "green", [ "v38.4", "h-57.9", "v182.4" ] ],
+    [ "keypad1:R4", "pico:GP9", "green", [ "v48", "h-57.8", "v182.4" ] ],
+    [ "keypad1:C4", "pico:GP21", "green", [ "v19.2", "h57.3", "v134.4" ] ],
+    [ "keypad1:C3", "pico:GP20", "green", [ "v28.8", "h57.45", "v230.4" ] ],
+    [ "keypad1:C2", "pico:GP19", "green", [ "v38.4", "h57.6", "v230.4" ] ],
+    [ "keypad1:C1", "pico:GP18", "green", [ "v48", "h57.5", "v230.4" ] ]
   ],
   "dependencies": {}
 }
