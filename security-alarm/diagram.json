@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "author": "The Bin - Hack Club",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-pi-pico-w", "id": "pico", "top": 399.95, "left": 3.55, "attrs": {} },
+    {
+      "type": "wokwi-buzzer",
+      "id": "wokwi-buzzer-0",
+      "top": 323.7,
+      "left": 263.7,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pir-motion-sensor",
+      "id": "wokwi-pir-motion-sensor-0",
+      "top": 462.52,
+      "left": 288.5,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "wokwi-servo-0",
+      "top": 544.4,
+      "left": -323.6,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "wokwi-hc-sr04-0",
+      "top": 371.3,
+      "left": -343.7,
+      "rotate": 270,
+      "attrs": {}
+    },
+    { "type": "wokwi-membrane-keypad", "id": "keypad1", "top": -50, "left": -90.4, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc1", "top": 711.16, "left": -96, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "gnd1", "top": 710.4, "left": -67.8, "attrs": {} }
+  ],
+  "connections": [
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "wokwi-hc-sr04-0:GND", "gnd1:GND", "black", [ "h0" ] ],
+    [ "wokwi-servo-0:GND", "gnd1:GND", "black", [ "h0" ] ],
+    [ "wokwi-pir-motion-sensor-0:GND", "gnd1:GND", "black", [ "h-9.6", "v201.34" ] ],
+    [ "wokwi-buzzer-0:1", "gnd1:GND", "black", [ "h0" ] ],
+    [ "wokwi-pir-motion-sensor-0:VCC", "vcc1:VCC", "red", [ "h-76.8", "v249.6" ] ],
+    [ "wokwi-servo-0:V+", "vcc1:VCC", "red", [ "h0" ] ],
+    [ "wokwi-hc-sr04-0:VCC", "vcc1:VCC", "red", [ "h0" ] ],
+    [ "wokwi-pir-motion-sensor-0:OUT", "pico:GP22", "green", [ "h-28.8", "v19.06" ] ]
+  ],
+  "dependencies": {}
+}
