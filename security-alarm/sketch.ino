@@ -3,8 +3,13 @@
 #define MOTOR_PIN 15
 #define TRIG_PIN 3
 #define ECHO_PIN 2
-#define FULL_ROTATION true // false - 180* | true - 360*
-#define DISTANCE = 102 // if distance lower than this the alarm will start
+#define ROTATION_LEFT 90
+#define ROTATION_RIGHT 90
+#define DISTANCE = 100 // if distance lower than this the alarm will start
+
+#include <Servo.h>
+
+Servo servo;
 
 void setup() {
   // put your setup code here, to run once:
@@ -16,6 +21,7 @@ void setup() {
   pinMode(ECHO_PIN, INPUT);
 }
 void loop() {
+
   bool motionDetected = digitalRead(MOTION_SENSOR_PIN);
   Serial1.println(motionDetected);
   // put your main code here, to run repeatedly:
