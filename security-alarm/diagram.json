@@ -50,7 +50,10 @@
     [ "wokwi-pir-motion-sensor-0:VCC", "vcc1:VCC", "red", [ "h-76.8", "v249.6" ] ],
     [ "wokwi-servo-0:V+", "vcc1:VCC", "red", [ "h0" ] ],
     [ "wokwi-hc-sr04-0:VCC", "vcc1:VCC", "red", [ "h0" ] ],
-    [ "wokwi-pir-motion-sensor-0:OUT", "pico:GP22", "green", [ "h-28.8", "v19.06" ] ]
+    [ "wokwi-pir-motion-sensor-0:OUT", "pico:GP22", "green", [ "h-28.8", "v19.06" ] ],
+    [ "wokwi-servo-0:PWM", "pico:GP15", "green", [ "h0" ] ],
+    [ "wokwi-hc-sr04-0:ECHO", "pico:GP2", "green", [ "h192", "v29.6" ] ],
+    [ "wokwi-hc-sr04-0:TRIG", "pico:GP3", "green", [ "h182.4", "v29.2" ] ]
   ],
   "dependencies": {}
 }
