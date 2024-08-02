@@ -2,20 +2,18 @@
 
 #define RECEIVER 26
 
-IRrecv receiver(RECEIVER);
-
 int currentDigit = 0;
 int alarmDigits[] = {0, 0, 0, 0};
 bool alarmSet = false;
 
 void setup() {
   Serial1.begin(115200);
-  receiver.enableIRIn();
+  IrReceiver.begin(RECEIVER, ENABLE_LED_FEEDBACK);
 }
 
 void loop() {
-  if (receiver.decode()) {
-    switch (receiver.decodedIRData.command) {
+  if (IrReceiver.decode()) {
+    switch (IrReceiver.decodedIRData.command) {
       case 168:
         stopEditing();
         break;
@@ -63,9 +61,9 @@ void loop() {
         break;
       default:
         Serial1.print("Other signal ");
-        Serial1.println(receiver.decodedIRData.command);
+        Serial1.println(IrReceiver.decodedIRData.command);
     }
-    receiver.resume(); 
+    IrReceiver.resume(); // Receive the next value
   }
 }
 
