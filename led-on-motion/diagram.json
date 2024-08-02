@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "author": "The Bin - Hack Club",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-pi-pico-w", "id": "pico", "top": -80.05, "left": -15.65, "attrs": {} },
+    { "type": "wokwi-neopixel", "id": "wokwi-neopixel-0", "top": -41.9, "left": -97, "attrs": {} },
+    {
+      "type": "wokwi-pir-motion-sensor",
+      "id": "wokwi-pir-motion-sensor-0",
+      "top": -44,
+      "left": 213.42,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "wokwi-relay-module-0",
+      "top": 230.6,
+      "left": -48,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "wokwi-relay-module-0:VCC", "pico:VBUS", "red", [ "h-9.6", "v-96", "h192", "v-220.8" ] ],
+    [ "wokwi-pir-motion-sensor-0:VCC", "pico:VBUS", "red", [ "v38.4", "h-67.2", "v-153.6" ] ],
+    [ "wokwi-pir-motion-sensor-0:GND", "pico:GND.8", "black", [ "v48", "h-163.46", "v-86.4" ] ],
+    [ "wokwi-relay-module-0:GND", "pico:GND.3", "black", [ "h-19.2", "v-163.6" ] ],
+    [ "wokwi-relay-module-0:IN", "pico:GP14", "green", [ "h-38.4", "v-173" ] ],
+    [ "wokwi-pir-motion-sensor-0:OUT", "pico:GP18", "green", [ "v38.4", "h-153.74" ] ],
+    [ "wokwi-neopixel-0:VSS", "pico:GND.3", "black", [ "v0" ] ],
+    [ "wokwi-neopixel-0:VDD", "pico:VBUS", "red", [ "h-9.6", "v-67.2", "h201.6", "v48" ] ],
+    [ "wokwi-neopixel-0:DIN", "pico:GP12", "green", [ "h18.4", "v115.16" ] ]
+  ],
+  "dependencies": {}
+}
