@@ -4,7 +4,13 @@
   "editor": "wokwi",
   "parts": [
     { "type": "board-pi-pico-w", "id": "pico", "top": -80.05, "left": -15.65, "attrs": {} },
-    { "type": "wokwi-neopixel", "id": "wokwi-neopixel-0", "top": -41.9, "left": -97, "attrs": {} },
+    {
+      "type": "wokwi-neopixel",
+      "id": "wokwi-neopixel-0",
+      "top": -41.9,
+      "left": -231.4,
+      "attrs": {}
+    },
     {
       "type": "wokwi-pir-motion-sensor",
       "id": "wokwi-pir-motion-sensor-0",
@@ -18,6 +24,14 @@
       "top": 230.6,
       "left": -48,
       "attrs": {}
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -74.4,
+      "left": -115,
+      "rotate": 180,
+      "attrs": { "color": "green" }
     }
   ],
   "connections": [
@@ -30,8 +44,10 @@
     [ "wokwi-relay-module-0:IN", "pico:GP14", "green", [ "h-38.4", "v-173" ] ],
     [ "wokwi-pir-motion-sensor-0:OUT", "pico:GP18", "green", [ "v38.4", "h-153.74" ] ],
     [ "wokwi-neopixel-0:VSS", "pico:GND.3", "black", [ "v0" ] ],
-    [ "wokwi-neopixel-0:VDD", "pico:VBUS", "red", [ "h-9.6", "v-67.2", "h201.6", "v48" ] ],
-    [ "wokwi-neopixel-0:DIN", "pico:GP12", "green", [ "h18.4", "v115.16" ] ]
+    [ "wokwi-neopixel-0:VDD", "pico:VBUS", "red", [ "h-9.6", "v-67.2", "h297.29" ] ],
+    [ "wokwi-neopixel-0:DIN", "pico:GP12", "green", [ "h18.4", "v115.16" ] ],
+    [ "pico:GND.1", "btn1:2.l", "black", [ "h-28.8", "v-19.2" ] ],
+    [ "btn1:1.l", "pico:GP2", "green", [ "h0" ] ]
   ],
   "dependencies": {}
 }
