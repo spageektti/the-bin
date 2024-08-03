@@ -11,7 +11,7 @@
       "left": -96,
       "attrs": {}
     },
-    { "type": "wokwi-dht22", "id": "wokwi-dht22-0", "top": 336.3, "left": -24.6, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "wokwi-dht22-0", "top": 336.3, "left": 52.2, "attrs": {} },
     {
       "type": "wokwi-neopixel",
       "id": "wokwi-neopixel-0",
@@ -84,7 +84,6 @@
   "connections": [
     [ "pico:GP0", "$serialMonitor:RX", "", [] ],
     [ "pico:GP1", "$serialMonitor:TX", "", [] ],
-    [ "wokwi-neopixel-0:DIN", "pico:GP2", "magenta", [ "h85.6", "v19.2" ] ],
     [ "vcc1:VCC", "wokwi-neopixel-0:VDD", "red", [ "v0" ] ],
     [ "gnd1:GND", "wokwi-neopixel-0:VSS", "black", [ "v48", "h76.8", "v67.2" ] ],
     [ "wokwi-pushbutton-0:1.r", "pico:GND.2", "black", [ "v0" ] ],
@@ -111,7 +110,16 @@
     [ "rtc1:5V", "vcc2:VCC", "red", [ "h-67.2", "v383.6", "h-499.2", "v-67.2" ] ],
     [ "rtc1:GND", "gnd2:GND", "black", [ "h-76.8", "v364.8" ] ],
     [ "rtc1:SDA", "pico:GP26", "cyan", [ "h-57.6", "v-96.3" ] ],
-    [ "rtc1:SCL", "pico:GP27", "limegreen", [ "h-48", "v-57.8" ] ]
+    [ "rtc1:SCL", "pico:GP27", "limegreen", [ "h-48", "v-57.8" ] ],
+    [ "wokwi-dht22-0:VCC", "vcc2:VCC", "red", [ "v57.6", "h-144" ] ],
+    [
+      "wokwi-dht22-0:SDA",
+      "pico:GP8",
+      "green",
+      [ "v19.2", "h105.7", "v-153.6", "h-201.6", "v-96" ]
+    ],
+    [ "wokwi-dht22-0:GND", "gnd2:GND", "black", [ "v96", "h-211.2" ] ],
+    [ "wokwi-neopixel-0:DIN", "pico:GP5", "green", [ "h85.6", "v48" ] ]
   ],
   "dependencies": {}
 }
