@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "author": "The Bin - Hack Club",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-pi-pico-w", "id": "pico", "top": 102.35, "left": 13.15, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "wokwi-pushbutton-0",
+      "top": 169.4,
+      "left": -96,
+      "attrs": {}
+    },
+    { "type": "wokwi-dht22", "id": "wokwi-dht22-0", "top": 336.3, "left": -24.6, "attrs": {} },
+    {
+      "type": "wokwi-neopixel",
+      "id": "wokwi-neopixel-0",
+      "top": 121.3,
+      "left": -125.8,
+      "attrs": {}
+    },
+    { "type": "wokwi-lcd1602", "id": "wokwi-lcd1602-0", "top": -25.37, "left": 112, "attrs": {} },
+    { "type": "wokwi-rgb-led", "id": "wokwi-rgb-led-0", "top": 645, "left": 0, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc1", "top": -8.84, "left": -211.2, "attrs": {} },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc2",
+      "top": 565.44,
+      "left": -172.6,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": -17.8,
+      "left": -163.4,
+      "rotate": 180,
+      "attrs": {}
+    },
+    { "type": "wokwi-gnd", "id": "gnd2", "top": 566.4, "left": -135, "attrs": {} }
+  ],
+  "connections": [
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "wokwi-neopixel-0:DIN", "pico:GP2", "magenta", [ "h85.6", "v19.2" ] ],
+    [ "vcc1:VCC", "wokwi-neopixel-0:VDD", "red", [ "v0" ] ],
+    [ "gnd1:GND", "wokwi-neopixel-0:VSS", "black", [ "v48", "h76.8", "v67.2" ] ],
+    [ "wokwi-pushbutton-0:1.r", "pico:GND.2", "black", [ "v0" ] ],
+    [ "wokwi-pushbutton-0:2.r", "pico:GP7", "gold", [ "h19.4", "v-9.4" ] ]
+  ],
+  "dependencies": {}
+}
