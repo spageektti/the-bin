@@ -26,7 +26,7 @@
       "left": -261.77,
       "attrs": { "color": "red" }
     },
-    { "type": "wokwi-ds1307", "id": "rtc1", "top": 177, "left": 134.5, "attrs": {} },
+    { "type": "wokwi-ds1307", "id": "rtc1", "top": 119.4, "left": 153.7, "attrs": {} },
     {
       "type": "wokwi-vcc",
       "id": "vcc1",
@@ -48,7 +48,11 @@
     [ "sevseg1:VCC", "vcc1:VCC", "red", [ "h0" ] ],
     [ "pico:GND.7", "btn1:2.l", "black", [ "h0" ] ],
     [ "btn1:1.l", "pico:GP28", "green", [ "v9.6", "h-23.06" ] ],
-    [ "ir1:DAT", "pico:GP12", "green", [ "h0" ] ]
+    [ "ir1:DAT", "pico:GP12", "green", [ "h0" ] ],
+    [ "sevseg1:DIO", "pico:GP3", "green", [ "h67.2", "v57.6" ] ],
+    [ "sevseg1:CLK", "pico:GP2", "green", [ "h76.8", "v57.6" ] ],
+    [ "rtc1:SDA", "pico:GP26", "green", [ "h-48", "v-48.3" ] ],
+    [ "rtc1:SCL", "pico:GP27", "green", [ "h-57.6", "v-77" ] ]
   ],
   "dependencies": {}
 }
