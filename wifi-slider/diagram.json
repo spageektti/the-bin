@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "author": "The Bin - Hack Club",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-pi-pico-w", "id": "pico", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-led-bar-graph",
+      "id": "wokwi-led-bar-graph-0",
+      "top": -91.2,
+      "left": 177.6,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "wokwi-servo-0",
+      "top": 284.2,
+      "left": -37.4,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-potentiometer",
+      "id": "wokwi-slide-potentiometer-0",
+      "top": -14,
+      "left": -255.2,
+      "rotate": 270,
+      "attrs": {}
+    },
+    { "type": "wokwi-vcc", "id": "vcc1", "top": 125.56, "left": -278.4, "attrs": {} }
+  ],
+  "connections": [
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "vcc1:VCC", "wokwi-servo-0:V+", "red", [ "v76.8", "h288" ] ],
+    [ "pico:GND.5", "wokwi-servo-0:GND", "black", [ "h42.26", "v35.19" ] ],
+    [ "wokwi-servo-0:PWM", "pico:GP15", "blue", [ "v-48", "h-115.4" ] ],
+    [ "wokwi-slide-potentiometer-0:GND", "pico:GND.8", "black", [ "v-24.4", "h259.2", "v115.2" ] ],
+    [ "wokwi-slide-potentiometer-0:VCC", "vcc1:VCC", "red", [ "v0" ] ],
+    [
+      "wokwi-slide-potentiometer-0:SIG",
+      "pico:GP26",
+      "orange",
+      [ "v38.4", "h104.8", "v-192", "h163.2", "v76.8" ]
+    ],
+    [ "wokwi-led-bar-graph-0:A1", "pico:GP2", "green", [ "h-201.6", "v134.4" ] ],
+    [ "wokwi-led-bar-graph-0:A2", "pico:GP3", "green", [ "h-211.2", "v124.8" ] ],
+    [ "wokwi-led-bar-graph-0:A3", "pico:GP4", "green", [ "h-240", "v144" ] ],
+    [ "wokwi-led-bar-graph-0:A4", "pico:GP5", "green", [ "h-230.4", "v144" ] ],
+    [ "wokwi-led-bar-graph-0:A5", "pico:GP6", "green", [ "h-192", "v163.19" ] ],
+    [ "wokwi-led-bar-graph-0:A6", "pico:GP7", "green", [ "h-259.2", "v143.99" ] ],
+    [ "wokwi-led-bar-graph-0:A7", "pico:GP8", "green", [ "h-278.4", "v153.59" ] ],
+    [ "wokwi-led-bar-graph-0:A8", "pico:GP9", "green", [ "h-249.6", "v143.99" ] ],
+    [ "wokwi-led-bar-graph-0:A9", "pico:GP10", "green", [ "h-240", "v153.59" ] ],
+    [ "wokwi-led-bar-graph-0:A10", "pico:GP11", "green", [ "h-201.6", "v153.59" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C10", "black", [ "h167.06", "v-80.05" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C9", "black", [ "h167.06", "v-89.65" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C8", "black", [ "h167.06", "v-99.25" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C7", "black", [ "h167.06", "v-108.85" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C6", "black", [ "h167.06", "v-118.45", "h-28.8" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C5", "black", [ "h167.06", "v-128.05" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C4", "black", [ "h167.06", "v-137.65", "h-28.8" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C3", "black", [ "h167.06", "v-147.25" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C2", "black", [ "h167.06", "v-156.85" ] ],
+    [ "pico:GND.7", "wokwi-led-bar-graph-0:C1", "black", [ "h167.06", "v-166.45" ] ]
+  ],
+  "dependencies": {}
+}
