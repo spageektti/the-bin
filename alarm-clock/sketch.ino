@@ -1,11 +1,13 @@
 #include <IRremote.h>
 #include <TM1637.h>
+#include <RTClib.h>
 
 #define RECEIVER 12
 #define CLK 2
 #define DIO 3
 
 TM1637 tm(CLK, DIO);
+RTC_DS1307 rtc;
 
 int currentDigit = 0;
 int alarmDigits[] = {0, 0, 0, 0};
@@ -19,6 +21,10 @@ void setup() {
 
   tm.init();
   tm.set(BRIGHT_TYPICAL);
+
+  if(!rtc.begin()){
+    Serial1.println("No RTC");
+  }
 }
 
 void loop() {
@@ -135,7 +141,11 @@ void displayOnScreen(){
 }
 
 void displayTime(){
-  for(int i = 0; i < 4; i++){
-    tm.display(i, alarmDigits[i] + 1);
-  }
+  DateTime now = rtc.now();
+
+  tm.display(0, now.hour() / 10);
+  tm.display(1, now.hour() % 10);
+
+  tm.display(0, now.minute() / 10);
+  tm.display(1, now.minute() % 10);
 }
