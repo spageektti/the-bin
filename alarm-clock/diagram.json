@@ -35,7 +35,14 @@
       "rotate": 180,
       "attrs": {}
     },
-    { "type": "wokwi-ir-remote", "id": "remote1", "top": 19.2, "left": 326.4, "attrs": {} }
+    { "type": "wokwi-ir-remote", "id": "remote1", "top": 19.2, "left": 326.4, "attrs": {} },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": -160.8,
+      "left": 11.4,
+      "attrs": { "volume": "0.1" }
+    }
   ],
   "connections": [
     [ "pico:GP0", "$serialMonitor:RX", "", [] ],
@@ -49,10 +56,12 @@
     [ "pico:GND.7", "btn1:2.l", "black", [ "h0" ] ],
     [ "btn1:1.l", "pico:GP28", "green", [ "v9.6", "h-23.06" ] ],
     [ "ir1:DAT", "pico:GP12", "green", [ "h0" ] ],
-    [ "sevseg1:DIO", "pico:GP3", "green", [ "h67.2", "v57.6" ] ],
-    [ "sevseg1:CLK", "pico:GP2", "green", [ "h76.8", "v57.6" ] ],
-    [ "rtc1:SDA", "pico:GP26", "green", [ "h-48", "v-48.3" ] ],
-    [ "rtc1:SCL", "pico:GP27", "green", [ "h-57.6", "v-77" ] ]
+    [ "sevseg1:DIO", "pico:GP3", "violet", [ "h67.2", "v57.6" ] ],
+    [ "sevseg1:CLK", "pico:GP2", "purple", [ "h76.8", "v57.6" ] ],
+    [ "rtc1:SDA", "pico:GP4", "blue", [ "h-9.6", "v86.1", "h-297.6", "v-172.8" ] ],
+    [ "rtc1:SCL", "pico:GP5", "green", [ "h-67.2", "v95.8", "h-288", "v-192" ] ],
+    [ "pico:GND.2", "bz1:1", "black", [ "h-44.45", "v-147.25" ] ],
+    [ "pico:GP27", "bz1:2", "gold", [ "h13.46", "v-185.65" ] ]
   ],
   "dependencies": {}
 }
