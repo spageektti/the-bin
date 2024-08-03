@@ -116,5 +116,39 @@ void displayDHTScreen() {
 }
 
 void displayWeatherScreen() {
-  
+  lcd.clear();
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin("http://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=YOUR_CITY");
+    int httpCode = http.GET();
+
+    if (httpCode > 0) {
+      String payload = http.getString();
+      JsonDocument doc(1024);
+      deserializeJson(doc, payload);
+
+      String weather = doc["current"]["condition"]["text"];
+      float temperature = doc["current"]["temp_c"];
+
+      lcd.setCursor(0, 0);
+      lcd.print("Weather: ");
+      lcd.print(weather);
+
+      lcd.setCursor(0, 1);
+      lcd.print("Temp: ");
+      lcd.print(temperature);
+      lcd.print(" C");
+    } else {
+      lcd.setCursor(0, 0);
+      lcd.print("Error fetching");
+      lcd.setCursor(0, 1);
+      lcd.print("weather data");
+    }
+    http.end();
+  } else {
+    lcd.setCursor(0, 0);
+    lcd.print("WiFi not");
+    lcd.setCursor(0, 1);
+    lcd.print("connected");
+  }
 }
