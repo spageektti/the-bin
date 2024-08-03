@@ -5,6 +5,8 @@
 #define RECEIVER 12
 #define CLK 2
 #define DIO 3
+#define ALARM_BUTTON_PIN 28
+#define BUZZER_PIN 27
 
 TM1637 tm(CLK, DIO);
 RTC_DS1307 rtc;
@@ -13,6 +15,8 @@ int currentDigit = 0;
 int alarmDigits[] = {0, 0, 0, 0};
 bool alarmSet = false;
 bool displayTimeFlag = true;
+bool alarmRinging = false;
+const int timezoneOffset = 2; // offset from UTC, default 2 because I'm from Poland
 
 void setup() {
   Serial1.begin(115200);
@@ -22,9 +26,17 @@ void setup() {
   tm.init();
   tm.set(BRIGHT_TYPICAL);
 
-  if(!rtc.begin()){
+  if (! rtc.begin()) {
     Serial1.println("No RTC");
+    Serial1.flush();
+    while (1) delay(10);
   }
+
+  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)) + TimeSpan(timezoneOffset * 3600));
+
+  pinMode(ALARM_BUTTON_PIN, INPUT_PULLUP);
+  pinMode(BUZZER_PIN, OUTPUT);
+  digitalWrite(BUZZER_PIN, LOW);
 }
 
 void loop() {
@@ -81,10 +93,19 @@ void loop() {
     }
     IrReceiver.resume(); // Receive the next value
   }
-  if(displayTimeFlag){
-    displayTime();
+
+  if (alarmSet && !alarmRinging) {
+    checkAlarm();
   }
-  else{
+
+  if (digitalRead(ALARM_BUTTON_PIN) == LOW) {
+    stopAlarm();
+    alarmSet = false;
+  }
+
+  if (displayTimeFlag) {
+    displayTime();
+  } else {
     displayOnScreen();
   }
 }
@@ -93,6 +114,7 @@ void stopEditing() {
   alarmSet = true;
   Serial1.print("Alarm set to: ");
   for (int i = 0; i < 4; i++) {
+    if (i == 2) Serial1.print(":");
     Serial1.print(alarmDigits[i]);
   }
   Serial1.println();
@@ -134,18 +156,45 @@ void setDigit(int digit) {
   displayTimeFlag = false;
 }
 
-void displayOnScreen(){
-  for(int i = 0; i < 4; i++){
+void displayOnScreen() {
+  for (int i = 0; i < 4; i++) {
     tm.display(i, alarmDigits[i]);
   }
 }
 
-void displayTime(){
+void displayTime() {
   DateTime now = rtc.now();
 
   tm.display(0, now.hour() / 10);
   tm.display(1, now.hour() % 10);
 
-  tm.display(0, now.minute() / 10);
-  tm.display(1, now.minute() % 10);
+  tm.display(2, now.minute() / 10);
+  tm.display(3, now.minute() % 10);
+}
+
+void checkAlarm() {
+  DateTime now = rtc.now();
+  int currentHour = now.hour();
+  int currentMinute = now.minute();
+
+  int alarmHour = alarmDigits[0] * 10 + alarmDigits[1];
+  int alarmMinute = alarmDigits[2] * 10 + alarmDigits[3];
+
+  if (currentHour == alarmHour && currentMinute == alarmMinute) {
+    startAlarm();
+  }
+}
+
+void startAlarm() {
+  alarmRinging = true;
+  Serial1.println("Alarm ringing!");
+  digitalWrite(BUZZER_PIN, HIGH);
+}
+
+void stopAlarm() {
+  if (alarmRinging) {
+    alarmRinging = false;
+    Serial1.println("Alarm stopped");
+    digitalWrite(BUZZER_PIN, LOW);
+  }
 }
