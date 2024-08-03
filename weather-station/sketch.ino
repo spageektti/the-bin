@@ -1,14 +1,23 @@
 #include <Adafruit_NeoPixel.h>
 #include <RTClib.h>
 #include <LiquidCrystal.h>
+#include <DHT.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <ArduinoJson.h>
 
 #define NEOPIXEL_PIN 12
 #define BUTTON_PIN 7
+#define DHT_PIN 8
+#define DHT_TYPE DHT22
+#define WIFI_SSID "Wokwi-GUEST"
+#define WIFI_PASSWORD ""
 #define TIMEZONE 2 // 0 = UTC | 1 = UTC+1 | -1 = UTC-1
 
 RTC_DS1307 rtc;
 Adafruit_NeoPixel pixel(1, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
-LiquidCrystal lcd(16, 17, 18, 19, 20, 21);
+LiquidCrystal lcd(21, 20, 19, 18, 17, 16);
+DHT dht(DHT_PIN, DHT_TYPE);
 
 int currentScreen = 0; // 0 = home screen | 1 = DHT screen | 2 = weather screen
 bool lastButtonState = HIGH;
@@ -18,6 +27,7 @@ void setup() {
 
   pixel.begin();
   lcd.begin(16, 2);
+  dht.begin();
 
   if (!rtc.begin()) {
     Serial1.println("RTC not found.");
@@ -28,6 +38,12 @@ void setup() {
   rtc.adjust(DateTime(F(__DATE__), F(__TIME__)) + TimeSpan(TIMEZONE * 3600));
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial1.println("Connecting to WiFi...");
+  }
 }
 
 void loop() {
@@ -40,10 +56,8 @@ void loop() {
   bool buttonState = digitalRead(BUTTON_PIN);
   if (buttonState == LOW && lastButtonState == HIGH) {
     delay(50); // Debounce delay
-    if (digitalRead(BUTTON_PIN) == LOW) {
-      currentScreen = (currentScreen + 1) % 3;
-      while(digitalRead(BUTTON_PIN) == LOW); // wait for button release
-    }
+    currentScreen = (currentScreen + 1) % 3;
+    while(digitalRead(BUTTON_PIN) == LOW); // wait for button release
   }
   lastButtonState = buttonState;
 
@@ -87,10 +101,8 @@ void displayHomeScreen() {
 
 void displayDHTScreen() {
   lcd.clear();
-
-  // replace with actual DHT readings
-  float temperature = 25.0;
-  float humidity = 50.0;
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
 
   lcd.setCursor(0, 0);
   lcd.print("Temp: ");
@@ -104,18 +116,5 @@ void displayDHTScreen() {
 }
 
 void displayWeatherScreen() {
-  lcd.clear();
-
-  // replace with actual weather API data
-  String weather = "Sunny";
-  float temperature = 28.0;
-
-  lcd.setCursor(0, 0);
-  lcd.print("Weather: ");
-  lcd.print(weather);
-
-  lcd.setCursor(0, 1);
-  lcd.print("Temp: ");
-  lcd.print(temperature);
-  lcd.print(" C");
+  
 }
