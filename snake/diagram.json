@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "author": "The Bin - Hack Club",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-pi-pico-w", "id": "pico", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-max7219-matrix",
+      "id": "wokwi-max7219-matrix-0",
+      "top": 19.8,
+      "left": -207.39,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "wokwi-buzzer-0",
+      "top": 235.5,
+      "left": -185.1,
+      "rotate": 270,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-analog-joystick",
+      "id": "wokwi-analog-joystick-0",
+      "top": 35.3,
+      "left": 215.5,
+      "rotate": 90,
+      "attrs": {}
+    },
+    { "type": "wokwi-vcc", "id": "vcc1", "top": -95.24, "left": 19.2, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "gnd1", "top": -104.2, "left": 38.2, "rotate": 180, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc2", "top": 346.36, "left": 19.2, "rotate": 180, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "gnd2", "top": 337.4, "left": 38.2, "attrs": {} }
+  ],
+  "connections": [
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "gnd2:GND", "wokwi-buzzer-0:1", "black", [ "v0" ] ],
+    [ "wokwi-analog-joystick-0:VCC", "vcc1:VCC", "red", [ "h-86.4", "v-105.6", "h-96" ] ],
+    [ "wokwi-analog-joystick-0:GND", "gnd2:GND", "black", [ "h-48", "v240" ] ],
+    [ "wokwi-analog-joystick-0:VERT", "pico:GP28", "yellow", [ "h-124.8", "v-19.2" ] ],
+    [ "wokwi-analog-joystick-0:HORZ", "pico:GP27", "cyan", [ "h-96", "v-9.6", "h-28.8" ] ],
+    [ "wokwi-analog-joystick-0:SEL", "pico:GP26", "limegreen", [ "h-124.8", "v-9.6" ] ],
+    [ "wokwi-buzzer-0:2", "pico:GP15", "magenta", [ "h57.6", "v-86" ] ],
+    [ "wokwi-max7219-matrix-0:GND", "gnd1:GND", "black", [ "h48", "v-96", "h96" ] ],
+    [ "vcc1:VCC", "wokwi-max7219-matrix-0:V+", "red", [ "v9.6", "h-134.4" ] ],
+    [ "wokwi-max7219-matrix-0:DIN", "pico:GP4", "green", [ "h76.8" ] ],
+    [ "wokwi-max7219-matrix-0:CS", "pico:GP5", "green", [ "h0" ] ],
+    [ "wokwi-max7219-matrix-0:CLK", "pico:GP6", "green", [ "h86.4", "v19.2" ] ]
+  ],
+  "dependencies": {}
+}
