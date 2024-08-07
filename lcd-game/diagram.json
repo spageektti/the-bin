@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "author": "The Bin - Hack Club",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-pi-pico-w", "id": "pico", "top": 25.55, "left": -63.65, "attrs": {} },
+    {
+      "type": "wokwi-rgb-led",
+      "id": "wokwi-rgb-led-0",
+      "top": -53.6,
+      "left": -181.3,
+      "attrs": { "common": "cathode" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "wokwi-pushbutton-0",
+      "top": 83,
+      "left": -172.8,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "wokwi-lcd1602-0",
+      "top": -217.37,
+      "left": -108.8,
+      "attrs": {}
+    },
+    { "type": "wokwi-ky-040", "id": "encoder1", "top": 174.5, "left": -250.4, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "gnd1", "top": 326.4, "left": -29.4, "attrs": {} },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc1",
+      "top": 327.16,
+      "left": -57.6,
+      "rotate": 180,
+      "attrs": {}
+    },
+    { "type": "wokwi-gnd", "id": "gnd2", "top": -46.6, "left": -38.6, "rotate": 180, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc2", "top": -45.84, "left": -66.8, "attrs": {} }
+  ],
+  "connections": [
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "wokwi-pushbutton-0:2.r", "pico:GP8", "green", [ "h19.4", "v9.8" ] ],
+    [ "pico:GND.1", "wokwi-pushbutton-0:1.r", "black", [ "h-48" ] ],
+    [ "pico:GP9", "wokwi-rgb-led-0:R", "red", [ "h-19.2", "v-124.8", "h-86.4" ] ],
+    [ "pico:GP10", "wokwi-rgb-led-0:G", "green", [ "h-9.6", "v-163.2", "h-76.8" ] ],
+    [ "pico:GP11", "wokwi-rgb-led-0:B", "blue", [ "h-28.8", "v-182.4", "h-57.6" ] ],
+    [
+      "gnd2:GND",
+      "wokwi-rgb-led-0:COM",
+      "black",
+      [ "v-19.2", "h0", "v-48", "h-96", "v86.4", "h-38.4" ]
+    ],
+    [ "encoder1:GND", "gnd1:GND", "black", [ "h19.2", "v77.6", "h76.8" ] ],
+    [ "vcc1:VCC", "encoder1:VCC", "red", [ "v-78.52", "h-47.8", "v-28.8" ] ],
+    [ "wokwi-lcd1602-0:RS", "pico:GP2", "green", [ "v28.8", "h-66.9", "v105.6" ] ],
+    [ "wokwi-lcd1602-0:E", "pico:GP3", "green", [ "v38.4", "h-76.8", "v124.8" ] ],
+    [ "wokwi-lcd1602-0:D4", "pico:GP4", "green", [ "v48", "h-115.2", "v124.8" ] ],
+    [ "wokwi-lcd1602-0:D5", "pico:GP5", "green", [ "v57.6", "h-124.7", "v134.4" ] ],
+    [ "wokwi-lcd1602-0:D6", "pico:GP6", "green", [ "v57.6", "h-134.2", "v134.4" ] ],
+    [ "wokwi-lcd1602-0:D7", "pico:GP7", "green", [ "v57.6", "h-143.7", "v153.6" ] ],
+    [ "gnd2:GND", "wokwi-lcd1602-0:RW", "black", [ "v0", "h28.8", "v-57.6", "h-38.4" ] ],
+    [ "gnd2:GND", "wokwi-lcd1602-0:VSS", "black", [ "v19.2", "h96" ] ]
+  ],
+  "dependencies": {}
+}
