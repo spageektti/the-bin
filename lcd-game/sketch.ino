@@ -8,8 +8,12 @@ const int redPin = 9;
 const int greenPin = 10;
 const int bluePin = 11;
 
-int carPosition = 0; // 0 for left, 1 for right
+int carPosition = 1; // 1 for bottom row
+int obstaclePosition = 15; // obstacle starts from the rightmost position
+int obstacleRow = 0; // 0 for top row, 1 for bottom row
 bool gameOver = false;
+unsigned long lastMoveTime = 0;
+const unsigned long moveInterval = 100;
 
 void setup() {
   lcd.begin(16, 2);
@@ -35,19 +39,49 @@ void loop() {
     return;
   }
 
+  if (millis() - lastMoveTime >= moveInterval) {
+    lastMoveTime = millis();
+    moveObstacle();
+  }
+
   int buttonState = digitalRead(buttonPin);
   if (buttonState == LOW) {
     changeCarPosition();
     delay(200);
   }
+
+  if (obstaclePosition == 0 && carPosition == obstacleRow) {
+    gameOver = true;
+    setLEDColor(255, 0, 0);
+    lcd.setCursor(0, 1);
+    lcd.print("Game Over!      ");
+  }
+}
+
+void moveObstacle() {
+  lcd.setCursor(obstaclePosition, obstacleRow);
+  lcd.print(" ");
+
+  if (obstaclePosition > 0) {
+    obstaclePosition--;
+  } else {
+    obstaclePosition = 15;
+    obstacleRow = random(0, 2);
+  }
+
+  lcd.setCursor(obstaclePosition, obstacleRow);
+  lcd.print("*");
+
+  lcd.setCursor(0, carPosition);
+  lcd.print(">");
 }
 
 void changeCarPosition() {
-  carPosition = (carPosition == 0) ? 1 : 0;
-  lcd.setCursor(carPosition == 0 ? 0 : 15, 1);
-  lcd.print(">");
-  lcd.setCursor(carPosition == 0 ? 15 : 0, 1);
+  lcd.setCursor(0, carPosition);
   lcd.print(" ");
+  carPosition = (carPosition == 1) ? 0 : 1;
+  lcd.setCursor(0, carPosition);
+  lcd.print(">");
 }
 
 void setLEDColor(int red, int green, int blue) {
