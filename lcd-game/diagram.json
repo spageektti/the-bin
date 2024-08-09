@@ -61,7 +61,9 @@
     [ "wokwi-lcd1602-0:D6", "pico:GP6", "green", [ "v57.6", "h-134.2", "v134.4" ] ],
     [ "wokwi-lcd1602-0:D7", "pico:GP7", "green", [ "v57.6", "h-143.7", "v153.6" ] ],
     [ "gnd2:GND", "wokwi-lcd1602-0:RW", "black", [ "v0", "h28.8", "v-57.6", "h-38.4" ] ],
-    [ "gnd2:GND", "wokwi-lcd1602-0:VSS", "black", [ "v19.2", "h96" ] ]
+    [ "gnd2:GND", "wokwi-lcd1602-0:VSS", "black", [ "v19.2", "h96" ] ],
+    [ "encoder1:CLK", "pico:GP12", "green", [ "h9.6", "v-48", "h9.6", "v48" ] ],
+    [ "encoder1:DT", "pico:GP13", "green", [ "h0" ] ]
   ],
   "dependencies": {}
 }
