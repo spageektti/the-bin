@@ -7,13 +7,19 @@ const int buttonPin = 8;
 const int redPin = 9;
 const int greenPin = 10;
 const int bluePin = 11;
+const int encoderPinA = 12;
+const int encoderPinB = 13;
 
-int carPosition = 1; // 1 for bottom row
-int obstaclePosition = 15; // obstacle starts from the rightmost position
-int obstacleRow = 0; // 0 for top row, 1 for bottom row
+int carPosition = 1;
+int obstaclePositions[3] = {15, 15, 15}; // positions of obstacles
+int obstacleRows[3] = {0, 0, 0}; // rows of obstacles
+int numObstacles = 1; // number of obstacles
 bool gameOver = false;
 unsigned long lastMoveTime = 0;
 const unsigned long moveInterval = 100;
+
+int lastEncoderA = LOW;
+int lastEncoderB = LOW;
 
 void setup() {
   lcd.begin(16, 2);
@@ -22,6 +28,8 @@ void setup() {
   pinMode(redPin, OUTPUT);
   pinMode(greenPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
+  pinMode(encoderPinA, INPUT);
+  pinMode(encoderPinB, INPUT);
 
   lcd.setCursor(0, 0);
   lcd.print("Car Driving Game");
@@ -32,6 +40,15 @@ void setup() {
 
   lcd.setCursor(0, 1);
   lcd.print(">");
+
+  numObstacles = random(1, 3);
+
+  int lastPosition = 8;
+  for (int i = 0; i < numObstacles; i++) {
+    obstaclePositions[i] = random(5, lastPosition + 1);
+    lastPosition = obstaclePositions[i] - 4;
+    obstacleRows[i] = random(0, 2);
+  }
 }
 
 void loop() {
@@ -41,7 +58,7 @@ void loop() {
 
   if (millis() - lastMoveTime >= moveInterval) {
     lastMoveTime = millis();
-    moveObstacle();
+    moveObstacles();
   }
 
   int buttonState = digitalRead(buttonPin);
@@ -50,30 +67,54 @@ void loop() {
     delay(200);
   }
 
-  if (obstaclePosition == 0 && carPosition == obstacleRow) {
-    gameOver = true;
-    setLEDColor(255, 0, 0);
-    lcd.setCursor(0, 1);
-    lcd.print("Game Over!      ");
+  int encoderA = digitalRead(encoderPinA);
+  int encoderB = digitalRead(encoderPinB);
+
+  if (encoderA != lastEncoderA) {
+    if (encoderB != encoderA) {
+      changeCarPosition();
+    }
+    lastEncoderA = encoderA;
+  }
+
+  for (int i = 0; i < numObstacles; i++) {
+    if (obstaclePositions[i] == 0 && carPosition == obstacleRows[i]) {
+      gameOver = true;
+      setLEDColor(255, 0, 0);
+      lcd.setCursor(0, 1);
+      lcd.print("Game Over!      ");
+    }
   }
 }
 
-void moveObstacle() {
-  lcd.setCursor(obstaclePosition, obstacleRow);
-  lcd.print(" ");
+void moveObstacles() {
+  lcd.clear();
 
-  if (obstaclePosition > 0) {
-    obstaclePosition--;
-  } else {
-    obstaclePosition = 15;
-    obstacleRow = random(0, 2);
+  for (int i = 0; i < numObstacles; i++) {
+    if (obstaclePositions[i] >= 0 && obstaclePositions[i] < 16) {
+      lcd.setCursor(obstaclePositions[i], obstacleRows[i]);
+      lcd.print("*");
+    }
+
+    if (obstaclePositions[i] > 0) {
+      obstaclePositions[i]--;
+    } else {
+      obstaclePositions[i] = random(15, 17);
+      obstacleRows[i] = random(0, 2);
+    }
   }
-
-  lcd.setCursor(obstaclePosition, obstacleRow);
-  lcd.print("*");
 
   lcd.setCursor(0, carPosition);
   lcd.print(">");
+
+  for (int i = 0; i < numObstacles; i++) {
+    if (obstaclePositions[i] == 0 && carPosition == obstacleRows[i]) {
+      gameOver = true;
+      setLEDColor(255, 0, 0);
+      lcd.setCursor(0, 1);
+      lcd.print("Game Over!      ");
+    }
+  }
 }
 
 void changeCarPosition() {
